@@ -163,8 +163,6 @@ spec:
      app: wordpress
      pod-template-hash: 55556f7
      tier: mysql
-      app.kubernetes.io/name: wordpress # Change your matchLabels
-      app.kubernetes.io/instance: my-release # Change your matchLabels
   file: 
     severity: 2
     matchPaths:
