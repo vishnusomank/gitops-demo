@@ -9,7 +9,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-cve-2020-24186-deny-wordpress-rce
-  namespace: default
 spec:
   tags: ["CVE", "WordPress-RCE", "CVE-2020-24186"]
   message: "Alert! *.php file upload to wp-content subdirectory detected"
@@ -36,7 +35,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-cve-2021-21389-deny-buddypress-privilege-escalation-rce
-  namespace: default
 spec:
   tags: ["CVE", "BuddyPress-RCE", "BuddyPress-Privilege-Escalation", "CVE-2021-21389"]
   message: "Alert! *.php file upload to wp-content subdirectory detected! Possible Privilege Escalation"
@@ -69,7 +67,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-cve-2021-24499-unauthenticated-rce
-  namespace: default
 spec:
   tags: ["Wordpress","CVE","CVE-2021-24499","unauthenticated-RCE"]
   message: "Alert! Access to workreap-temp directory is detected and blocked, Hence this blocked CVE-2021-24499"
@@ -117,7 +114,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-cve-2021-24867-block-wordpress-supply-chain-attack
-  namespace: default
 spec:
   tags: ["CVE","K8s","CVE-2021-24867", "WordPress", "Supply chain"]
   message: "Alert! *.php file created, possible exploitation of CVE-2021-24867"
@@ -151,7 +147,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-nucleci-cve-2021-39327
-  namespace: default
 spec:
   tags: ["WORDPRESS", "NUCLECI", "CVE-2021-39327"]
   message: Alert! Backup logs are not accessible.
@@ -183,7 +178,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-cve-2021-41381
-  namespace: default
 spec:
   tags: ["CVE", "payara", "Path Traversal", "cve-2021-41381"]
   message: "Alert! Possible cve-2021-41381 is detected and blocked. Your sensitive files are secured."
@@ -236,7 +230,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-wordpress-wp-cli-block-users
-  namespace: default
 spec:
   message: "(Alert) wp command line is denied for user"
   tags: ["Wordpress","wp-cli"]
@@ -264,7 +257,6 @@ apiVersion: security.kubearmor.com/v1
 kind: KubeArmorPolicy
 metadata:
   name: ksp-wordpress-wp-config-block
-  namespace: default
 spec:
   message: "(Alert) someone tried to open wp-config file"
   tags: ["Wordpress"]
