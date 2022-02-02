@@ -15,12 +15,13 @@ spec:
   message: "Alert! *.php file upload to wp-content subdirectory detected"
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress   #change this label with your label
   file:
     severity: 5
     matchPatterns:
@@ -42,12 +43,13 @@ spec:
   message: "Alert! *.php file upload to wp-content subdirectory detected! Possible Privilege Escalation"
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress1   #change this label with your label
   process:
     severity: 5
     matchPaths:
@@ -75,12 +77,13 @@ spec:
   message: "Alert! Access to workreap-temp directory is detected and blocked, Hence this blocked CVE-2021-24499"
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress   #Change with your pod labels
   process:
     severity: 5
     matchDirectories:
@@ -123,12 +126,13 @@ spec:
   message: "Alert! *.php file created, possible exploitation of CVE-2021-24867"
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress     #change label app: wordpress to match your requirement
   file:
     severity: 6
     matchPatterns:
@@ -157,12 +161,14 @@ spec:
   message: Alert! Backup logs are not accessible.
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app.kubernetes.io/name: wordpress # Change your matchLabels
+      app.kubernetes.io/instance: my-release # Change your matchLabels
   file: 
     severity: 2
     matchPaths:
@@ -187,12 +193,13 @@ spec:
   message: "Alert! Possible cve-2021-41381 is detected and blocked. Your sensitive files are secured."
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress  #Change to labels of frontend web application pod 
   file:
     severity: 6
     matchPatterns:
@@ -212,12 +219,13 @@ spec:
   tags: ["Wordpress"]
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress # use your labels here
   process:
     severity: 5
     matchPaths:
@@ -240,12 +248,13 @@ spec:
   tags: ["Wordpress","wp-cli"]
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress # use your own labels here
   process: 
       severity: 5
       matchPaths:
@@ -268,12 +277,13 @@ spec:
   tags: ["Wordpress"]
   selector:
     matchLabels:
-     app: wordpress
-     pod-template-hash: 68f6d5cdd6
-     tier: frontend
-     app: wordpress
-     pod-template-hash: 55556f7
-     tier: mysql
+      app: wordpress
+      pod-template-hash: 68f6d5cdd6
+      tier: frontend
+      app: wordpress
+      pod-template-hash: 55556f7
+      tier: mysql
+      app: wordpress # use your labels here
   file:
     severity: 9
     matchPaths:
