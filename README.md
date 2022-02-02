@@ -1,5 +1,5 @@
 # gitops-demo
 
-**Contains **
+**Contains**
 - Jenkinsfile
 - policy.yaml
