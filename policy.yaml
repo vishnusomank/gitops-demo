@@ -16,7 +16,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress   #change this label with your label
   file:
     severity: 5
@@ -39,7 +38,6 @@ spec:
   message: "Alert! *.php file upload to wp-content subdirectory detected! Possible Privilege Escalation"
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress1   #change this label with your label
   process:
@@ -69,7 +67,6 @@ spec:
   message: "Alert! Access to workreap-temp directory is detected and blocked, Hence this blocked CVE-2021-24499"
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress   #Change with your pod labels
   process:
@@ -115,7 +112,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress     #change label app: wordpress to match your requirement
   file:
     severity: 6
@@ -146,7 +142,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app.kubernetes.io/name: wordpress # Change your matchLabels
       app.kubernetes.io/instance: my-release # Change your matchLabels
   file: 
@@ -174,7 +169,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress  #Change to labels of frontend web application pod 
   file:
     severity: 6
@@ -195,7 +189,6 @@ spec:
   tags: ["Wordpress"]
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress # use your labels here
   process:
@@ -221,7 +214,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress # use your own labels here
   process: 
       severity: 5
@@ -245,7 +237,6 @@ spec:
   tags: ["Wordpress"]
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress # use your labels here
   file:
@@ -272,7 +263,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress   #change this label with your label
   file:
     severity: 5
@@ -295,7 +285,6 @@ spec:
   message: "Alert! *.php file upload to wp-content subdirectory detected! Possible Privilege Escalation"
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress1   #change this label with your label
   process:
@@ -325,7 +314,6 @@ spec:
   message: "Alert! Access to workreap-temp directory is detected and blocked, Hence this blocked CVE-2021-24499"
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress   #Change with your pod labels
   process:
@@ -371,7 +359,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress     #change label app: wordpress to match your requirement
   file:
     severity: 6
@@ -402,7 +389,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app.kubernetes.io/name: wordpress # Change your matchLabels
       app.kubernetes.io/instance: my-release # Change your matchLabels
   file: 
@@ -430,7 +416,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress  #Change to labels of frontend web application pod 
   file:
     severity: 6
@@ -451,7 +436,6 @@ spec:
   tags: ["Wordpress"]
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress # use your labels here
   process:
@@ -477,7 +461,6 @@ spec:
   selector:
     matchLabels:
       app: wordpress
-      app: wordpress
       app: wordpress # use your own labels here
   process: 
       severity: 5
@@ -501,7 +484,6 @@ spec:
   tags: ["Wordpress"]
   selector:
     matchLabels:
-      app: wordpress
       app: wordpress
       app: wordpress # use your labels here
   file:
