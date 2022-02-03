@@ -1,1 +1,513 @@
 
+
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2020-24186-deny-wordpress-rce
+  namespace: default
+spec:
+  tags: ["CVE", "WordPress-RCE", "CVE-2020-24186"]
+  message: "Alert! *.php file upload to wp-content subdirectory detected"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress   #change this label with your label
+  file:
+    severity: 5
+    matchPatterns:
+    - pattern: /var/www/html/wp-content/uploads/**/*.php
+    - pattern: /var/www/html/wp-content/uploads/**/*.sh
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-21389-deny-buddypress-privilege-escalation-rce
+  namespace: default
+spec:
+  tags: ["CVE", "BuddyPress-RCE", "BuddyPress-Privilege-Escalation", "CVE-2021-21389"]
+  message: "Alert! *.php file upload to wp-content subdirectory detected! Possible Privilege Escalation"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress1   #change this label with your label
+  process:
+    severity: 5
+    matchPaths:
+    - path: /bin/sh
+      fromSource:
+      - path: /usr/sbin/apache2
+    action: Block
+  file:
+    severity: 5
+    matchPatterns:
+    - pattern: /var/www/html/wp-content/uploads/**/*.php
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-24499-unauthenticated-rce
+  namespace: default
+spec:
+  tags: ["Wordpress","CVE","CVE-2021-24499","unauthenticated-RCE"]
+  message: "Alert! Access to workreap-temp directory is detected and blocked, Hence this blocked CVE-2021-24499"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress   #Change with your pod labels
+  process:
+    severity: 5
+    matchDirectories:
+    - dir: /var/www/html/wp-content/uploads/workreap-temp/
+      recursive: true
+      ownerOnly: false
+    matchPatterns:
+    - pattern: /**/wp-content/uploads/workreap-temp/
+      ownerOnly: false
+    - pattern: /**/**/wp-content/uploads/workreap-temp/
+      ownerOnly: false
+    action: Block
+  file:
+    severity: 5
+    matchDirectories:
+    - dir: /var/www/html/wp-content/uploads/workreap-temp/
+      readOnly: false
+      recursive: true
+      ownerOnly: false
+    matchPatterns:
+    - pattern: /**/wp-content/uploads/workreap-temp/
+      readOnly: false
+      ownerOnly: false
+    - pattern: /**/**/wp-content/uploads/workreap-temp/
+      readOnly: false
+      ownerOnly: false
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-24867-block-wordpress-supply-chain-attack
+  namespace: default
+spec:
+  tags: ["CVE","K8s","CVE-2021-24867", "WordPress", "Supply chain"]
+  message: "Alert! *.php file created, possible exploitation of CVE-2021-24867"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress     #change label app: wordpress to match your requirement
+  file:
+    severity: 6
+    matchPatterns:
+    - pattern: /**/initial.php
+  action:
+    Block
+  process:
+    severity: 6
+    matchPatterns:
+    - pattern: /**/curl
+    - pattern: /**/bash
+  action:
+    Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-nucleci-cve-2021-39327
+  namespace: default
+spec:
+  tags: ["WORDPRESS", "NUCLECI", "CVE-2021-39327"]
+  message: Alert! Backup logs are not accessible.
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app.kubernetes.io/name: wordpress # Change your matchLabels
+      app.kubernetes.io/instance: my-release # Change your matchLabels
+  file: 
+    severity: 2
+    matchPaths:
+    - path: /bitnami/wordpress/wp-content/bps-backup/logs/db_backup_log.txt
+    - path: /bitnami/wordpress/wp-content/plugins/bulletproof-security/admin/htaccess/db_backup_log.txt
+    matchPatterns:
+    - pattern: /**/**/wp-content/bps-backup/logs/db_backup_log.txt
+    - pattern: /**/**/wp-content/plugins/bulletproof-security/admin/htaccess/db_backup_log.txt
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-41381
+  namespace: default
+spec:
+  tags: ["CVE", "payara", "Path Traversal", "cve-2021-41381"]
+  message: "Alert! Possible cve-2021-41381 is detected and blocked. Your sensitive files are secured."
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress  #Change to labels of frontend web application pod 
+  file:
+    severity: 6
+    matchPatterns:
+    - pattern: /**/WEB-INF/**/*.* #regex to get all sensitive files under WEB-INF directory.
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-wordpress-packages-process-block
+spec:  
+  message: "(Alert) Package Manager triggered! unexpected behaviour"
+  tags: ["Wordpress"]
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress # use your labels here
+  process:
+    severity: 5
+    matchPaths:
+    - path: /usr/bin/apt
+    - path: /usr/bin/apt-get
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-wordpress-wp-cli-block-users
+  namespace: default
+spec:
+  message: "(Alert) wp command line is denied for user"
+  tags: ["Wordpress","wp-cli"]
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress # use your own labels here
+  process: 
+      severity: 5
+      matchPaths:
+         - path: /usr/local/bin/wp
+           ownerOnly: true
+      action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-wordpress-wp-config-block
+  namespace: default
+spec:
+  message: "(Alert) someone tried to open wp-config file"
+  tags: ["Wordpress"]
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress # use your labels here
+  file:
+    severity: 9
+    matchPaths:
+    - path: /var/www/html/wp-config.php
+      fromSource:
+      - path: /bin/cat
+    action: Block
+
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2020-24186-deny-wordpress-rce
+  namespace: test
+spec:
+  tags: ["CVE", "WordPress-RCE", "CVE-2020-24186"]
+  message: "Alert! *.php file upload to wp-content subdirectory detected"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress   #change this label with your label
+  file:
+    severity: 5
+    matchPatterns:
+    - pattern: /var/www/html/wp-content/uploads/**/*.php
+    - pattern: /var/www/html/wp-content/uploads/**/*.sh
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-21389-deny-buddypress-privilege-escalation-rce
+  namespace: test
+spec:
+  tags: ["CVE", "BuddyPress-RCE", "BuddyPress-Privilege-Escalation", "CVE-2021-21389"]
+  message: "Alert! *.php file upload to wp-content subdirectory detected! Possible Privilege Escalation"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress1   #change this label with your label
+  process:
+    severity: 5
+    matchPaths:
+    - path: /bin/sh
+      fromSource:
+      - path: /usr/sbin/apache2
+    action: Block
+  file:
+    severity: 5
+    matchPatterns:
+    - pattern: /var/www/html/wp-content/uploads/**/*.php
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-24499-unauthenticated-rce
+  namespace: test
+spec:
+  tags: ["Wordpress","CVE","CVE-2021-24499","unauthenticated-RCE"]
+  message: "Alert! Access to workreap-temp directory is detected and blocked, Hence this blocked CVE-2021-24499"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress   #Change with your pod labels
+  process:
+    severity: 5
+    matchDirectories:
+    - dir: /var/www/html/wp-content/uploads/workreap-temp/
+      recursive: true
+      ownerOnly: false
+    matchPatterns:
+    - pattern: /**/wp-content/uploads/workreap-temp/
+      ownerOnly: false
+    - pattern: /**/**/wp-content/uploads/workreap-temp/
+      ownerOnly: false
+    action: Block
+  file:
+    severity: 5
+    matchDirectories:
+    - dir: /var/www/html/wp-content/uploads/workreap-temp/
+      readOnly: false
+      recursive: true
+      ownerOnly: false
+    matchPatterns:
+    - pattern: /**/wp-content/uploads/workreap-temp/
+      readOnly: false
+      ownerOnly: false
+    - pattern: /**/**/wp-content/uploads/workreap-temp/
+      readOnly: false
+      ownerOnly: false
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-24867-block-wordpress-supply-chain-attack
+  namespace: test
+spec:
+  tags: ["CVE","K8s","CVE-2021-24867", "WordPress", "Supply chain"]
+  message: "Alert! *.php file created, possible exploitation of CVE-2021-24867"
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress     #change label app: wordpress to match your requirement
+  file:
+    severity: 6
+    matchPatterns:
+    - pattern: /**/initial.php
+  action:
+    Block
+  process:
+    severity: 6
+    matchPatterns:
+    - pattern: /**/curl
+    - pattern: /**/bash
+  action:
+    Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-nucleci-cve-2021-39327
+  namespace: test
+spec:
+  tags: ["WORDPRESS", "NUCLECI", "CVE-2021-39327"]
+  message: Alert! Backup logs are not accessible.
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app.kubernetes.io/name: wordpress # Change your matchLabels
+      app.kubernetes.io/instance: my-release # Change your matchLabels
+  file: 
+    severity: 2
+    matchPaths:
+    - path: /bitnami/wordpress/wp-content/bps-backup/logs/db_backup_log.txt
+    - path: /bitnami/wordpress/wp-content/plugins/bulletproof-security/admin/htaccess/db_backup_log.txt
+    matchPatterns:
+    - pattern: /**/**/wp-content/bps-backup/logs/db_backup_log.txt
+    - pattern: /**/**/wp-content/plugins/bulletproof-security/admin/htaccess/db_backup_log.txt
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cve-2021-41381
+  namespace: test
+spec:
+  tags: ["CVE", "payara", "Path Traversal", "cve-2021-41381"]
+  message: "Alert! Possible cve-2021-41381 is detected and blocked. Your sensitive files are secured."
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress  #Change to labels of frontend web application pod 
+  file:
+    severity: 6
+    matchPatterns:
+    - pattern: /**/WEB-INF/**/*.* #regex to get all sensitive files under WEB-INF directory.
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-wordpress-packages-process-block
+spec:  
+  message: "(Alert) Package Manager triggered! unexpected behaviour"
+  tags: ["Wordpress"]
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress # use your labels here
+  process:
+    severity: 5
+    matchPaths:
+    - path: /usr/bin/apt
+    - path: /usr/bin/apt-get
+    action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-wordpress-wp-cli-block-users
+  namespace: test
+spec:
+  message: "(Alert) wp command line is denied for user"
+  tags: ["Wordpress","wp-cli"]
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress # use your own labels here
+  process: 
+      severity: 5
+      matchPaths:
+         - path: /usr/local/bin/wp
+           ownerOnly: true
+      action: Block
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-wordpress-wp-config-block
+  namespace: test
+spec:
+  message: "(Alert) someone tried to open wp-config file"
+  tags: ["Wordpress"]
+  selector:
+    matchLabels:
+      app: wordpress
+      app: wordpress
+      app: wordpress # use your labels here
+  file:
+    severity: 9
+    matchPaths:
+    - path: /var/www/html/wp-config.php
+      fromSource:
+      - path: /bin/cat
+    action: Block
