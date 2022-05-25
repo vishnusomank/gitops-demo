@@ -1,0 +1,20 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-network-jpuhpzregjjjezg
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: user
+  network:
+    matchProtocols:
+    - protocol: tcp
+      fromSource:
+      - path: /user
+    - protocol: udp
+      fromSource:
+      - path: /user
+  action: Allow
+---

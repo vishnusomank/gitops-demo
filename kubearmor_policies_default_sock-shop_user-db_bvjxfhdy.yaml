@@ -1,0 +1,30 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-rgkkxmcjjsqjoiw
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: user-db
+  file:
+    matchPaths:
+    - path: /data/db-users/WiredTigerLAS.wt
+      fromSource:
+      - path: /usr/bin/mongod
+    - path: /data/db-users/diagnostic.data
+      fromSource:
+      - path: /usr/bin/mongod
+    - path: /data/db-users/index-1-8553087046432070880.wt
+      fromSource:
+      - path: /usr/bin/mongod
+    matchDirectories:
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/mongod
+    - dir: /sys/
+      fromSource:
+      - path: /usr/bin/mongod
+  action: Allow
+---

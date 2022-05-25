@@ -1,0 +1,105 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-process-smnefutlvxljemq
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: catalogue-db
+  process:
+    matchPaths:
+    - path: /bin/sleep
+      fromSource:
+      - path: /bin/bash
+    - path: /usr/bin/mysql_tzinfo_to_sql
+      fromSource:
+      - path: /bin/bash
+    - path: /usr/sbin/mysqld
+  file:
+    matchPaths:
+    - path: /etc/ld.so.cache
+      fromSource:
+      - path: /bin/sleep
+    - path: /etc/localtime
+      fromSource:
+      - path: /usr/sbin/mysqld
+    - path: /lib/x86_64-linux-gnu/libc.so.6
+      fromSource:
+      - path: /bin/sleep
+      - path: /usr/bin/mysql
+    - path: /lib/x86_64-linux-gnu/libdl.so.2
+      fromSource:
+      - path: /bin/sed
+    - path: /lib/x86_64-linux-gnu/libgcc_s.so.1
+      fromSource:
+      - path: /usr/bin/mysql
+    - path: /lib/x86_64-linux-gnu/libm.so.6
+      fromSource:
+      - path: /usr/bin/mysql
+    - path: /usr/share/mysql/english/errmsg.sys
+      fromSource:
+      - path: /usr/sbin/mysqld
+    - path: /var/lib/mysql/catalogue-db-867df75f49-dvjl4.lower-test
+      fromSource:
+      - path: /usr/sbin/mysqld
+    - path: /var/lib/mysql/mysql/event.MYI
+      fromSource:
+      - path: /usr/sbin/mysqld
+    - path: /var/lib/mysql/mysql/user.MYI
+      fromSource:
+      - path: /usr/sbin/mysqld
+    matchDirectories:
+    - dir: /etc/mysql/conf.d/
+      fromSource:
+      - path: /usr/bin/mysql
+    - dir: /etc/mysql/mysql.conf.d/
+      fromSource:
+      - path: /usr/bin/mysql
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/id
+    - dir: /usr/share/zoneinfo/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/America/Kentucky/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/Europe/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/posix/Indian/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/posix/Mexico/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/right/America/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/right/Arctic/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/right/Asia/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/right/Atlantic/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/right/Brazil/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/right/Canada/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+    - dir: /usr/share/zoneinfo/right/Indian/
+      fromSource:
+      - path: /usr/bin/mysql_tzinfo_to_sql
+  network:
+    matchProtocols:
+    - protocol: tcp
+      fromSource:
+      - path: /usr/bin/mysql
+  action: Allow
+---

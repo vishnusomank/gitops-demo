@@ -1,0 +1,22 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-tbausgxxsqebxxw
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: carts
+  file:
+    matchPaths:
+    - path: /usr/src/app/app.jar
+      fromSource:
+      - path: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+  network:
+    matchProtocols:
+    - protocol: udp
+      fromSource:
+      - path: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+  action: Allow
+---

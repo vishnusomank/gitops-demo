@@ -1,0 +1,140 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-ncibyjbjjcktgzr
+  namespace: default
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      io.kompose.service: pgadmin
+  process:
+    matchPaths:
+    - path: /bin/sh
+      fromSource:
+      - path: /usr/bin/python3.9
+    - path: /usr/bin/sudo
+      fromSource:
+      - path: /bin/busybox
+    - path: /usr/libexec/postfix/master
+      fromSource:
+      - path: /bin/busybox
+      - path: /usr/libexec/postfix/postfix-script
+    - path: /usr/libexec/postfix/pickup
+      fromSource:
+      - path: /usr/libexec/postfix/master
+    - path: /usr/libexec/postfix/postfix-script
+      fromSource:
+      - path: /bin/busybox
+    - path: /usr/local/pgsql-14/pg_dump
+      fromSource:
+      - path: /usr/bin/python3.9
+    - path: /usr/sbin/postconf
+      fromSource:
+      - path: /usr/libexec/postfix/postfix-script
+  file:
+    matchPaths:
+    - path: /dev/null
+      fromSource:
+      - path: /bin/busybox
+      - path: /usr/libexec/postfix/master
+    - path: /dev/urandom
+      fromSource:
+      - path: /usr/libexec/postfix/postfix-script
+    - path: /etc/group
+      fromSource:
+      - path: /usr/libexec/postfix/master
+      - path: /usr/libexec/postfix/pickup
+    - path: /etc/passwd
+      fromSource:
+      - path: /usr/libexec/postfix/master
+      - path: /usr/libexec/postfix/pickup
+      - path: /usr/libexec/postfix/postfix-script
+      - path: /usr/sbin/postlog
+    - path: /etc/postfix/dynamicmaps.cf.d/lmdb
+      fromSource:
+      - path: /usr/libexec/postfix/pickup
+    - path: /etc/postfix/dynamicmaps.cf
+      fromSource:
+      - path: /usr/libexec/postfix/pickup
+    - path: /etc/postfix/main.cf
+      fromSource:
+      - path: /usr/libexec/postfix/master
+      - path: /usr/libexec/postfix/pickup
+      - path: /usr/sbin/postconf
+    - path: /etc/postfix/master.cf
+      fromSource:
+      - path: /usr/libexec/postfix/master
+      - path: /usr/sbin/postconf
+    - path: /etc/shadow
+      fromSource:
+      - path: /bin/busybox
+    - path: /etc/sudoers.d/postfix
+      fromSource:
+      - path: /usr/libexec/postfix/postfix-script
+    - path: /lib/libcrypto.so.1.1
+      fromSource:
+      - path: /usr/sbin/postconf
+    - path: /lib/libssl.so.1.1
+      fromSource:
+      - path: /usr/sbin/postconf
+    - path: /pgadmin4/pgadmin/__init__.py
+      fromSource:
+      - path: /usr/bin/python3.9
+    - path: /usr/lib/libgcc_s.so.1
+      fromSource:
+      - path: /usr/sbin/postlog
+    - path: /usr/lib/libicudata.so.69
+      fromSource:
+      - path: /bin/busybox
+    - path: /usr/lib/libstdc++.so.6
+      fromSource:
+      - path: /usr/libexec/postfix/postfix-script
+    - path: /var/lib/postfix/master.lock
+      fromSource:
+      - path: /usr/libexec/postfix/master
+    - path: /var/spool/postfix/saved
+      fromSource:
+      - path: /bin/busybox
+    - path: /venv/lib/python3.9/site-packages/markupsafe/__init__.py
+      fromSource:
+      - path: /usr/bin/python3.9
+    - path: /venv/lib/python3.9/site-packages/werkzeug/__init__.py
+      fromSource:
+      - path: /usr/bin/python3.9
+    - path: /venv/lib/python3.9/site-packages/werkzeug/serving.py
+      fromSource:
+      - path: /usr/bin/python3.9
+    matchDirectories:
+    - dir: /lib/
+      fromSource:
+      - path: /usr/local/pgsql-14/pg_dump
+    - dir: /proc/
+      fromSource:
+      - path: /bin/sh
+    - dir: /usr/lib/
+      fromSource:
+      - path: /usr/libexec/postfix/pickup
+      - path: /usr/local/pgsql-14/pg_dump
+      - path: /usr/sbin/postconf
+    - dir: /usr/lib/python3.9/
+      fromSource:
+      - path: /usr/bin/python3.9
+  network:
+    matchProtocols:
+    - protocol: raw
+      fromSource:
+      - path: /bin/busybox
+    - protocol: tcp
+      fromSource:
+      - path: /bin/busybox
+      - path: /usr/bin/python3.9
+      - path: /usr/libexec/postfix/master
+      - path: /usr/libexec/postfix/pickup
+      - path: /usr/sbin/postconf
+    - protocol: udp
+      fromSource:
+      - path: /usr/libexec/postfix/pickup
+      - path: /usr/sbin/postconf
+  action: Allow
+---

@@ -1,0 +1,184 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-lywcqlzxvvrfgfw
+  namespace: explorer
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: mysql
+      helm.sh/chart: mysql-8.6.1
+  process:
+    matchPaths:
+    - path: /bin/bash
+    - path: /bin/echo
+      fromSource:
+      - path: /usr/bin/xargs
+    - path: /opt/bitnami/mysql/bin/mysql
+      fromSource:
+      - path: /bin/bash
+    - path: /opt/bitnami/mysql/bin/mysqld
+      fromSource:
+      - path: /bin/bash
+    - path: /opt/bitnami/scripts/mysql/setup.sh
+      fromSource:
+      - path: /bin/bash
+    matchDirectories:
+    - dir: /bin/
+      fromSource:
+      - path: /bin/bash
+    - dir: /usr/bin/
+      fromSource:
+      - path: /bin/bash
+  file:
+    matchPaths:
+    - path: /dev/null
+      fromSource:
+      - path: /opt/bitnami/common/bin/echo
+      - path: /opt/bitnami/mysql/bin/echo
+      - path: /opt/bitnami/mysql/bin/mysqld
+      - path: /sbin/echo
+      - path: /usr/bin/echo
+      - path: /usr/bin/lsof
+      - path: /usr/local/bin/echo
+    - path: /etc/group
+      fromSource:
+      - path: /bin/bash
+    - path: /etc/ld.so.cache
+      fromSource:
+      - path: /bin/bash
+      - path: /bin/date
+      - path: /bin/mkdir
+      - path: /bin/rm
+      - path: /bin/sleep
+      - path: /opt/bitnami/mysql/bin/mysql
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      - path: /opt/bitnami/mysql/bin/mysqld
+      - path: /opt/bitnami/scripts/mysql/entrypoint.sh
+      - path: /usr/bin/dirname
+      - path: /usr/bin/find
+      - path: /usr/bin/id
+      - path: /usr/bin/lsof
+    - path: /etc/localtime
+      fromSource:
+      - path: /bin/date
+      - path: /opt/bitnami/mysql/bin/mysqld
+    - path: /etc/nsswitch.conf
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+    - path: /etc/passwd
+      fromSource:
+      - path: /bin/bash
+      - path: /opt/bitnami/mysql/bin/mysql
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      - path: /opt/bitnami/scripts/mysql/entrypoint.sh
+    - path: /lib/x86_64-linux-gnu/libc.so.6
+      fromSource:
+      - path: /bin/bash
+      - path: /bin/date
+      - path: /bin/echo
+      - path: /bin/mkdir
+      - path: /bin/rm
+      - path: /bin/sleep
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      - path: /usr/bin/dirname
+    - path: /lib/x86_64-linux-gnu/libdl.so.2
+      fromSource:
+      - path: /bin/mkdir
+      - path: /opt/bitnami/scripts/mysql/entrypoint.sh
+    - path: /lib/x86_64-linux-gnu/libnss_files.so.2
+      fromSource:
+      - path: /opt/bitnami/scripts/mysql/entrypoint.sh
+    - path: /lib/x86_64-linux-gnu/libpcre.so.3
+      fromSource:
+      - path: /usr/bin/lsof
+    - path: /lib/x86_64-linux-gnu/libpthread.so.0
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+    - path: /lib/x86_64-linux-gnu/librt.so.1
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+    - path: /lib/x86_64-linux-gnu/libselinux.so.1
+      fromSource:
+      - path: /bin/mkdir
+    - path: /lib/x86_64-linux-gnu/libtinfo.so.6
+      fromSource:
+      - path: /opt/bitnami/scripts/mysql/entrypoint.sh
+    - path: /opt/bitnami/mysql/conf/my.cnf
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+    - path: /opt/bitnami/mysql/share/charsets/Index.xml
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+    - path: /tmp/mysqlx.sock.lock
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+    - path: /usr/lib/ssl/openssl.cnf
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      - path: /opt/bitnami/mysql/bin/mysqld
+    - path: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+    - path: /usr/lib/x86_64-linux-gnu/libssl.so.1.1
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+    - path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+    matchDirectories:
+    - dir: /
+      fromSource:
+      - path: /usr/bin/lsof
+    - dir: /bitnami/mysql/data/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+    - dir: /docker-entrypoint-initdb.d/
+      fromSource:
+      - path: /usr/bin/find
+    - dir: /lib/x86_64-linux-gnu/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      - path: /opt/bitnami/mysql/bin/mysqld
+      - path: /usr/bin/find
+      - path: /usr/bin/id
+    - dir: /opt/bitnami/mysql/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+    - dir: /opt/bitnami/mysql/tmp/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+    - dir: /proc/
+      fromSource:
+      - path: /bin/bash
+      - path: /bin/mkdir
+      - path: /opt/bitnami/mysql/bin/echo
+      - path: /sbin/echo
+      - path: /usr/bin/find
+      - path: /usr/bin/id
+      - path: /usr/bin/lsof
+      - path: /usr/bin/xargs
+      - path: /usr/local/bin/echo
+      - path: /usr/local/sbin/echo
+    - dir: /sys/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+    - dir: /usr/lib/x86_64-linux-gnu/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+  network:
+    matchProtocols:
+    - protocol: tcp
+      fromSource:
+      - path: /bin/bash
+      - path: /opt/bitnami/mysql/bin/mysql
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      - path: /opt/bitnami/mysql/bin/mysqld
+  action: Allow
+---

@@ -1,0 +1,34 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-process-lhiubrwbcltnjot
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: queue-master
+  process:
+    matchPaths:
+    - path: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+      fromSource:
+      - path: /bin/busybox
+    - path: /usr/local/bin/java.sh
+  file:
+    matchPaths:
+    - path: /usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server/libjvm.so
+      fromSource:
+      - path: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+    - path: /usr/local/bin/java.sh
+      fromSource:
+      - path: /bin/busybox
+    - path: /usr/src/app/app.jar
+      fromSource:
+      - path: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+  network:
+    matchProtocols:
+    - protocol: tcp
+      fromSource:
+      - path: /usr/lib/jvm/java-1.8-openjdk/jre/bin/java
+  action: Allow
+---
