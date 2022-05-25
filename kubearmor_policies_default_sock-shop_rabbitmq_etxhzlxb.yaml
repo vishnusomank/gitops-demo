@@ -1,0 +1,39 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-ecumusniapmotvh
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: rabbitmq
+  process:
+    matchPaths:
+    - path: /bin/sh
+      fromSource:
+      - path: /usr/lib/erlang/erts-8.3/bin/erl_child_setup
+    - path: /usr/bin/erl
+      fromSource:
+      - path: /bin/dash
+    - path: /usr/lib/erlang/erts-8.3/bin/inet_gethost
+      fromSource:
+      - path: /usr/lib/erlang/erts-8.3/bin/erl_child_setup
+  file:
+    matchPaths:
+    - path: /lib/x86_64-linux-gnu/libdl.so.2
+      fromSource:
+      - path: /usr/lib/erlang/erts-8.3/bin/inet_gethost
+    - path: /usr/lib/erlang/lib/kernel-5.2/ebin/inet_parse.beam
+      fromSource:
+      - path: /usr/lib/erlang/erts-8.3/bin/beam.smp
+  network:
+    matchProtocols:
+    - protocol: tcp
+      fromSource:
+      - path: /usr/lib/erlang/erts-8.3/bin/inet_gethost
+    - protocol: udp
+      fromSource:
+      - path: /usr/lib/erlang/erts-8.3/bin/beam.smp
+  action: Allow
+---

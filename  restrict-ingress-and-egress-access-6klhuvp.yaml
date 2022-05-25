@@ -1,0 +1,24 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: restrict-ingress-and-egress-access-qlreg1v
+  namespace: kube-system
+spec:
+  description: "Policy to restrict ingress and egress traffic in Jupyter Notebook"
+  endpointSelector:
+    matchLabels:
+      k8s-app: kube-dns
+      pod-template-hash: 599484b884
+  ingress:
+    - fromEndpoints: # Restricts ingress communication from outside Cluster
+        - {}
+    - fromEntities: # Allows ingress communication within Cluster and Namespace
+        - cluster
+  egress:
+    - toEntities: # Allows egress communication within Cluster and Namespace
+        - cluster
+    - toEndpoints:
+        - matchLabels:
+  namespace: kube-system
+

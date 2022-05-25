@@ -1,0 +1,85 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-cxphhbihbqpdnua
+  namespace: explorer
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      container: knoxautopolicy
+  process:
+    matchPaths:
+    - path: /usr/bin/bash
+    - path: /usr/bin/getopt
+      fromSource:
+      - path: /convert_sys_policy.sh
+    - path: /usr/bin/rm
+      fromSource:
+      - path: /usr/bin/bash
+    - path: /usr/local/bin/grpcurl
+      fromSource:
+      - path: /convert_net_policy.sh
+      - path: /convert_sys_policy.sh
+  file:
+    matchPaths:
+    - path: /dev/null
+      fromSource:
+      - path: /convert_net_policy.sh
+      - path: /convert_sys_policy.sh
+      - path: /usr/bin/bash
+    - path: /etc/hosts
+      fromSource:
+      - path: /knoxAutoPolicy
+    - path: /etc/ld.so.cache
+      fromSource:
+      - path: /usr/bin/getopt
+      - path: /usr/bin/rm
+    - path: /etc/nsswitch.conf
+      fromSource:
+      - path: /usr/local/bin/grpcurl
+    - path: /etc/resolv.conf
+      fromSource:
+      - path: /usr/local/bin/grpcurl
+    - path: /lib/x86_64-linux-gnu/libc.so.6
+      fromSource:
+      - path: /usr/bin/bash
+      - path: /usr/bin/ls
+      - path: /usr/bin/rm
+    - path: /lib/x86_64-linux-gnu/libpcre2-8.so.0
+      fromSource:
+      - path: /usr/bin/ls
+    - path: /var/run/secrets/kubernetes.io/serviceaccount/token
+      fromSource:
+      - path: /knoxAutoPolicy
+    matchDirectories:
+    - dir: /
+      fromSource:
+      - path: /usr/bin/tar
+    - dir: /etc/
+      fromSource:
+      - path: /usr/bin/tar
+    - dir: /lib/x86_64-linux-gnu/
+      fromSource:
+      - path: /usr/bin/tar
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/ls
+      - path: /usr/bin/tar
+    - dir: /sys/
+      fromSource:
+      - path: /usr/bin/tar
+      - path: /usr/local/bin/grpcurl
+  network:
+    matchProtocols:
+    - protocol: tcp
+      fromSource:
+      - path: /knoxAutoPolicy
+      - path: /usr/bin/bash
+      - path: /usr/bin/tar
+    - protocol: udp
+      fromSource:
+      - path: /knoxAutoPolicy
+      - path: /usr/local/bin/grpcurl
+  action: Allow
+---

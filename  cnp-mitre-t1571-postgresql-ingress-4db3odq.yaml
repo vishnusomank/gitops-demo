@@ -1,0 +1,17 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-mitre-t1571-postgresql-ingress-dndmceh
+  namespace: default
+spec:
+  description: "Allow ingress communication only through standard ports of PostgresSQL" 
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: postgres
+      pod-template-hash: 55f58945c
+  ingress:
+  - toPorts:
+    - ports:
+      - port: "5432"
+        protocol: TCP

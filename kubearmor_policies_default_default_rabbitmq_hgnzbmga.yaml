@@ -1,0 +1,93 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-qbwjkzmsalfzzjt
+  namespace: default
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbitmq
+  process:
+    matchPaths:
+    - path: /bin/df
+      fromSource:
+      - path: /bin/busybox
+      - path: /bin/sh
+    - path: /bin/sh
+      fromSource:
+      - path: /usr/local/lib/erlang/bin/erl
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - path: /usr/local/lib/erlang/erts-12.3.2/bin/epmd
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/beam.smp
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - path: /usr/local/lib/erlang/erts-12.3.2/bin/inet_gethost
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erl_child_setup
+  file:
+    matchPaths:
+    - path: /dev/fd
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erl_child_setup
+    - path: /dev/null
+      fromSource:
+      - path: /bin/busybox
+      - path: /bin/df
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/epmd
+    - path: /etc/hosts
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/inet_gethost
+    - path: /opt/rabbitmq/plugins
+      fromSource:
+      - path: /usr/local/lib/erlang/bin/erl
+    - path: /usr/local/lib/erlang/bin/no_dot_erlang.boot
+      fromSource:
+      - path: /usr/local/lib/erlang/bin/erl
+    - path: /usr/local/lib/erlang/lib/compiler-8.1.1/ebin
+      fromSource:
+      - path: /usr/local/lib/erlang/bin/erl
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - path: /usr/local/lib/erlang/lib/stdlib-3.17.2/ebin/rand.beam
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - path: /usr/local/lib/erlang/lib/stdlib-3.17.2/ebin/supervisor_bridge.beam
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - path: /var/lib/rabbitmq/.erlang.cookie
+      fromSource:
+      - path: /usr/local/lib/erlang/bin/erl
+    matchDirectories:
+    - dir: /opt/rabbitmq/plugins/
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/beam.smp
+    - dir: /sys/
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - dir: /usr/local/lib/erlang/lib/
+      fromSource:
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/beam.smp
+    - dir: /usr/local/lib/erlang/lib/kernel-8.3.2/ebin/
+      fromSource:
+      - path: /usr/local/lib/erlang/bin/erl
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - dir: /usr/local/lib/erlang/lib/stdlib-3.17.2/ebin/
+      fromSource:
+      - path: /usr/local/lib/erlang/bin/erl
+  network:
+    matchProtocols:
+    - protocol: tcp
+      fromSource:
+      - path: /bin/busybox
+      - path: /usr/local/lib/erlang/bin/erl
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/beam.smp
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/epmd
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+    - protocol: udp
+      fromSource:
+      - path: /bin/busybox
+      - path: /usr/local/lib/erlang/bin/erl
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/beam.smp
+      - path: /usr/local/lib/erlang/erts-12.3.2/bin/erlexec
+  action: Allow
+---

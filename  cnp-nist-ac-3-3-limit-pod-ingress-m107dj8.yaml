@@ -1,0 +1,16 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-nist-ac-3-3-limit-pod-ingress-3cndqfk
+  namespace: kube-system
+spec:
+  description: "After applying the policy, This pod only allow connections from inside Namespace"
+  endpointSelector:
+    matchLabels:
+      controller-revision-hash: 56889964d4
+      k8s-app: cilium
+      pod-template-generation: 1
+  ingress:
+    - fromEndpoints:
+        - {}

@@ -1,0 +1,70 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-process-ogqqsuvemoaurfq
+  namespace: default
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      io.kompose.service: postgres
+  process:
+    matchPaths:
+    - path: /bin/sh
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/pg_ctl
+      - path: /usr/lib/postgresql/14/bin/postgres
+    - path: /usr/bin/locale
+      fromSource:
+      - path: /bin/dash
+    - path: /usr/lib/postgresql/14/bin/postgres
+      fromSource:
+      - path: /bin/dash
+      - path: /usr/lib/postgresql/14/bin/pg_ctl
+  file:
+    matchPaths:
+    - path: /dev/shm/PostgreSQL.1175691070
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/postgres
+    - path: /lib/x86_64-linux-gnu/libc.so.6
+      fromSource:
+      - path: /bin/dash
+    - path: /lib/x86_64-linux-gnu/libcom_err.so.2
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/postgres
+    - path: /usr/lib/locale/locale-archive
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/psql
+    - path: /usr/share/postgresql/14/information_schema.sql
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/initdb
+    - path: /usr/share/postgresql/14/snowball_create.sql
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/initdb
+    - path: /usr/share/postgresql/14/system_views.sql
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/initdb
+    - path: /var/lib/postgresql/data/global/pg_control
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/postgres
+    - path: /var/lib/postgresql/data/postmaster.pid
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/pg_ctl
+    matchDirectories:
+    - dir: /usr/lib/x86_64-linux-gnu/
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/psql
+  network:
+    matchProtocols:
+    - protocol: raw
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/postgres
+    - protocol: tcp
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/postgres
+      - path: /usr/lib/postgresql/14/bin/psql
+    - protocol: udp
+      fromSource:
+      - path: /usr/lib/postgresql/14/bin/postgres
+  action: Allow
+---

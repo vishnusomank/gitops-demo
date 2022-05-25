@@ -1,0 +1,24 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-ojvktrlyqylalfq
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: carts-db
+  file:
+    matchPaths:
+    - path: /etc/lsb-release
+      fromSource:
+      - path: /usr/bin/mongod
+    matchDirectories:
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/mongod
+    - dir: /sys/
+      fromSource:
+      - path: /usr/bin/mongod
+  action: Allow
+---

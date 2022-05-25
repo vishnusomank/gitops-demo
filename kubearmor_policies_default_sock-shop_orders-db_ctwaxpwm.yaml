@@ -1,0 +1,35 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-file-tpxaidgpnmoybza
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: orders-db
+  process:
+    matchPaths:
+    - path: /usr/bin/chown
+      fromSource:
+      - path: /usr/bin/bash
+    - path: /usr/bin/find
+      fromSource:
+      - path: /usr/bin/bash
+  file:
+    matchPaths:
+    - path: /data/db/journal
+      fromSource:
+      - path: /usr/bin/mongod
+    - path: /etc/dpkg/dpkg.cfg.d/excludes
+      fromSource:
+      - path: /usr/bin/dpkg
+    - path: /etc/dpkg/dpkg.cfg
+      fromSource:
+      - path: /usr/bin/dpkg
+    matchDirectories:
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/mongod
+  action: Allow
+---

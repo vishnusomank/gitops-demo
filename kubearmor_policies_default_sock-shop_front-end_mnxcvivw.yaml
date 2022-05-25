@@ -1,0 +1,26 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-network-bdjkvoujosxckbb
+  namespace: sock-shop
+spec:
+  severity: 1
+  selector:
+    matchLabels:
+      name: front-end
+  file:
+    matchPaths:
+    - path: /etc/hosts
+      fromSource:
+      - path: /usr/local/bin/node
+    matchDirectories:
+    - dir: /proc/
+      fromSource:
+      - path: /usr/local/bin/node
+  network:
+    matchProtocols:
+    - protocol: udp
+      fromSource:
+      - path: /usr/local/bin/node
+  action: Allow
+---
