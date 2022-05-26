@@ -1,0 +1,27 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-block-stig-mongodb-v-235169-limit-access-to-db-configuration-file-rkb6yto
+  namespace: default
+spec:
+  tags: ["STIG", "MYSQL"]
+  message: "Alert! mysql configuration files access has been denied"
+  selector:
+    matchLabels:
+      release: jupyter-hub
+      app: jupyterhub
+      component: proxy
+      hub.jupyter.org/network-access-hub: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 69f565ffc5
+  file:
+    severity: 5
+    matchPaths:
+    - path: /etc/mysql/my.cnf
+      ownerOnly: true
+    action: Block

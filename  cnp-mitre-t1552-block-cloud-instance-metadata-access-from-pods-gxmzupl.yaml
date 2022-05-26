@@ -1,0 +1,19 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "cnp-mitre-t1552-block-cloud-instance-metadata-access-from-pods"-cckgsd8
+  namespace: kube-system
+spec:
+  description: "The policy will block access to cloud metadata ips from containers"
+  endpointSelector:
+    matchLabels:
+      controller-revision-hash: 6c4b5bcf94
+      kubearmor-app: kubearmor
+      pod-template-generation: 1
+  egress:
+  - toCIDRSet:
+    - cidr: 0.0.0.0/0
+      except:
+      - 169.254.169.254/32
+      - 169.254.170.2/32

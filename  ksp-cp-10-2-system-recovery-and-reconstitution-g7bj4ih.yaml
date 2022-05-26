@@ -1,0 +1,38 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cp-10-2-system-recovery-and-reconstitution-uf41tv4
+  namespace: default
+spec:
+  tags: ["NIST", "Cp-10-2"]
+  message: "Database Manager System Paths is Audited"
+  selector:
+    matchLabels:
+      release: jupyter-hub
+      app: jupyterhub
+      component: proxy
+      hub.jupyter.org/network-access-hub: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 69f565ffc5
+  file:
+    severity: 5
+    matchDirectories:
+      - dir: /var/lib/mysql/
+        recursive: true
+      - dir: /var/lib/postgresql/
+        recursive: true   
+      - dir: /etc/mysql/
+        recursive: true
+      - dir: /etc/postgres/
+        recursive: true   
+      - dir: /var/log/mysql/
+        recursive: true   
+      - dir: /var/log/postgresql/
+        recursive: true           
+    action: 
+      Audit

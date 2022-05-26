@@ -1,0 +1,30 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-thumbsdb-disclosure-block-n7fp46h
+  namespace: default
+spec:
+  message: Permission denied for thumbs.db file
+  tags : ["exposure","files"]
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      hub.jupyter.org/network-access-proxy-api: true
+      hub.jupyter.org/network-access-proxy-http: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 88d7c67c5
+      release: jupyter-hub
+  file:
+    matchPatterns: 
+     - pattern: /**/Thumbs.db
+       ownerOnly: true
+     - pattern: /**/thumbs.db     
+       ownerOnly: true
+    severity: 6 # high severity
+    action: Block

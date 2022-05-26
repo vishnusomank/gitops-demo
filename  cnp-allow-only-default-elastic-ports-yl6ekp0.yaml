@@ -1,0 +1,21 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-allow-only-default-elastic-ports-ckl6u8k
+  namespace: kube-system
+spec:
+  description: "To block all ports except 9200 and 9300 in elastic pod"
+  endpointSelector:
+    matchLabels:
+      controller-revision-hash: 7b445dc7b4
+      k8s-app: cilium
+      pod-template-generation: 1
+  ingress:
+    - fromEntities:
+        - cluster
+      toPorts:
+        - ports:
+            - port: "9200"     #change port values to match your ports
+        - ports:
+            - port: "9300"

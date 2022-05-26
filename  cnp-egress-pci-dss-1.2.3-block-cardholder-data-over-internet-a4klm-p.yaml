@@ -1,0 +1,19 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-egress-pci-dss-1.2.3-block-cardholder-data-over-internet-xdzqixh
+  namespace: kube-system
+spec:
+  description: "do not allow direct connection outbound between cardholder to internet"
+  endpointSelector: 
+    matchLabels:
+      k8s-app: kube-dns
+      pod-template-hash: 599484b884
+  egress:
+    - toEntities:
+        - cluster
+    - toEndpoints:
+        - matchLabels:
+  namespace: kube-system
+

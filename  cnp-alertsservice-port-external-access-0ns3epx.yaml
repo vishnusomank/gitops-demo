@@ -1,0 +1,21 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-alertsservice-port-external-access-e3ur4ui
+  namespace: kube-system
+spec:
+  description: "This Policy will Protect Alertsservice External Access from unknown IP's"
+  endpointSelector:
+    matchLabels:
+      controller-revision-hash: 7b445dc7b4
+      k8s-app: cilium
+      pod-template-generation: 1
+  ingress:
+    - fromEntities:
+        - cluster
+    - fromCIDRSet:
+        - cidr: 0.0.0.0/0  # Change this CIDR with your CIDR
+      toPorts:
+        - ports:
+            - port: "8095"

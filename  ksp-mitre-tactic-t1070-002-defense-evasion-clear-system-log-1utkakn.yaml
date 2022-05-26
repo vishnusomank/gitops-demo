@@ -1,0 +1,30 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-mitre-tactic-t1070-002-defense-evasion-clear-system-log-mz07siz
+  namespace: default
+spec:
+  tags: ["MITRE", "T1070.002", "Defense Evasion", "Clear Log Activities", "Suspicious log manipulation"]
+  message: "Defense evasion clear or manipulate system logs"
+  selector:
+    matchLabels:
+      release: jupyter-hub
+      app: jupyterhub
+      component: proxy
+      hub.jupyter.org/network-access-hub: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 69f565ffc5
+  file:
+    severity: 2
+    matchDirectories:
+    - dir: /var/log/
+      recursive: true
+      readOnly: true
+    action: Audit
+ 

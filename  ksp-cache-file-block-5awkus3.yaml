@@ -1,0 +1,24 @@
+---
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cache-file-block-azl9yzi
+  namespace: default
+spec:
+  message: Permission denied for cache file
+  tags : ["exposure","files"]
+  selector:
+    matchLabels:
+      app: redis
+      chart: redis-10.5.7
+      controller-revision-hash: cache-redis-slave-74c4658867
+      release: cache
+      role: slave
+      statefulset.kubernetes.io/pod-name: cache-redis-slave-0
+  file:
+    matchPatterns:
+     - pattern: /**/ehcache.xml
+     - pattern: /**/cfcache.map
+       ownerOnly: true
+    severity: 6 # high severity
+  action: Block

@@ -1,0 +1,25 @@
+---
+---
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-saia-web-server-info-v2j86g1
+  namespace: default
+spec:
+  message: Access denied to loadtextfile.htm file
+  tags : ["config","exposure"]
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      hub.jupyter.org/network-access-proxy-api: true
+      hub.jupyter.org/network-access-proxy-http: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 88d7c67c5
+      release: jupyter-hub
+  file:
+   severity: 3
+   matchPatterns:
+   - pattern: /**/loadtextfile.htm
+     ownerOnly: true
+  action: Block
