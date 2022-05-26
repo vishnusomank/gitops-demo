@@ -1,0 +1,28 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-restrict-access-mysql-server-config-jbkj6na
+  namespace: default
+spec:
+  tags: ["mysql", "MITRE", "system"]
+  message: "Warning! someone tried access the MySQL server config file"
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      hub.jupyter.org/network-access-proxy-api: true
+      hub.jupyter.org/network-access-proxy-http: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 88d7c67c5
+      release: jupyter-hub
+  file:
+    severity: 5      # medium severity
+    matchPaths:
+    - path: /etc/mysql/my.cnf
+      ownerOnly: true
+    action: Block

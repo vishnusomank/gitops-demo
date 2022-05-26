@@ -1,0 +1,23 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-stig-postgresql-port-external-access-zi6-c4d
+  namespace: default
+spec:
+  description: "This will Block PostgreSQL External Access"
+  endpointSelector:
+    matchLabels:
+      release: jupyter-hub
+      app: jupyterhub
+      component: continuous-image-puller
+      controller-revision-hash: 56bc99b8f5
+      pod-template-generation: 1
+  ingress:
+    - fromEntities:
+        - cluster
+    - fromCIDRSet:
+        - cidr: 10.10.10.1/16    #change with your ip address
+      toPorts:
+        - ports:
+            - port: "5432"

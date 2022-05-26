@@ -1,0 +1,23 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-allow-only-default-elastic-ports-lds04n5
+  namespace: default
+spec:
+  description: "To block all ports except 9200 and 9300 in elastic pod"
+  endpointSelector:
+    matchLabels:
+      app: elasticsearch-master
+      chart: elasticsearch
+      controller-revision-hash: elasticsearch-master-78777c797c
+      release: elasticsearch
+      statefulset.kubernetes.io/pod-name: elasticsearch-master-2
+  ingress:
+    - fromEntities:
+        - cluster
+      toPorts:
+        - ports:
+            - port: "9200"     #change port values to match your ports
+        - ports:
+            - port: "9300"

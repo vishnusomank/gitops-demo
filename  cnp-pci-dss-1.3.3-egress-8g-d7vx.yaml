@@ -1,0 +1,19 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-pci-dss-1.3.3-egress-6hq838i
+  namespace: kube-system
+spec:
+  description: "This policy will allow outbound connection using kube-dns in port 53"
+  endpointSelector:
+    matchLabels:
+      k8s-app: kube-dns
+      pod-template-hash: 599484b884
+  egress:
+    - toEntities:
+        - cluster
+    - toEndpoints:
+        - matchLabels:
+  namespace: kube-system
+

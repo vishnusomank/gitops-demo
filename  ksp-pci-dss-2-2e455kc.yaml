@@ -1,0 +1,37 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-pci-dss-2-e7c2x3o
+  namespace: default
+spec:
+  tags: ["PCI-DSS"]
+  message: "Password File is Blocked"
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      hub.jupyter.org/network-access-proxy-api: true
+      hub.jupyter.org/network-access-proxy-http: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 88d7c67c5
+      release: jupyter-hub
+  process:
+    severity: 2
+    matchPaths:
+      - path: /bin/mount
+    action: Block
+  file:
+    severity: 3
+    matchPaths:
+      - path: /etc/passwd
+        readOnly: false
+    matchDirectories:
+      - dir: /etc/snmp/
+        recursive: true
+        readOnly: false
+    action: Block

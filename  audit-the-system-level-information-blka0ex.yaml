@@ -1,0 +1,37 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: audit-the-system-level-information-pcycjm8
+  namespace: default
+spec:
+  tags: ["NIST","system","ksp","CP-9(4)"]
+  message: "Suspicious! someone tried to know your system information"
+  selector:
+    matchLabels:
+      release: jupyter-hub
+      app: jupyterhub
+      component: proxy
+      hub.jupyter.org/network-access-hub: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 69f565ffc5
+  file:
+    severity: 3
+    matchDirectories:
+    - dir: /proc/
+      recursive: true
+    action: Audit
+  process:
+    severity: 4       
+    matchPaths:
+    - path: /bin/uname
+    - path: /usr/bin/lshw
+    - path: /usr/bin/lscpu
+    - path: /bin/lsblk
+    - path: /usr/bin/lspci
+    - path: /sbin/fdisk
+    action: Block

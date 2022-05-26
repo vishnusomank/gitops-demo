@@ -1,0 +1,27 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: "cnp-pci-dss-10-track-and-monitor-all-access-to-network-resources-and-cardholder-data"-cgffu0d
+  namespace: kube-system
+spec:
+  description: "Monitor Network Resources"
+  endpointSelector:
+    matchLabels:
+      controller-revision-hash: 7b445dc7b4
+      k8s-app: cilium
+      pod-template-generation: 1
+  ingress:
+    - toPorts:
+        - ports:
+            - port: "514 "
+              protocol: TCP
+        - ports:
+            - port: "3306"
+              protocol: TCP
+        - ports:
+            - port: "1433"
+              protocol: TCP
+        - ports:
+            - port: "23"
+              protocol: TCP

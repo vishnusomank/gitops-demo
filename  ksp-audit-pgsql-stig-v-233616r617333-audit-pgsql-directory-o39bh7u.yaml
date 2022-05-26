@@ -1,0 +1,29 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-audit-pgsql-stig-v-233616r617333-audit-pgsql-directory-ibo1r1f
+  namespace: default
+spec:
+  tags: ["STIG", "PSQL"]
+  message: "Notification! postgresql data has been accessed"
+  selector:
+    matchLabels:
+      release: jupyter-hub
+      app: jupyterhub
+      component: proxy
+      hub.jupyter.org/network-access-hub: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 69f565ffc5
+  process:
+    action: Audit
+    severity: 6
+    matchDirectories:
+      - dir: /var/lib/postgresql/data/
+        fromSource:
+          - path: /usr/lib/postgresql/14/bin/postgres
+        recursive: true

@@ -1,0 +1,27 @@
+---
+# https://www.stigviewer.com/stig/oracle_mysql_8.0/2021-12-10/finding/V-235146
+
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-mysql-stig-v-235146-sl02tu7
+  namespace: explorer
+spec:
+  description: "Restrict access to unused ports"
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-7d648d884
+      helm.sh/chart: mysql-8.6.1
+      statefulset.kubernetes.io/pod-name: mysql-0
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: mysql
+  ingress:
+    - fromEndpoints:
+        - {}
+      toPorts:
+        - ports:
+            - port: "3306"
+        - ports:
+            - port: "33060"

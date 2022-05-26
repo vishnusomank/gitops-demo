@@ -1,0 +1,40 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-nist-ps-5-personnel-transfer-0dbymq3
+  namespace: default
+spec:
+  tags: ["NIST", "PS-5", "SP 800-53"] 
+  message: "Notifications! User account management activites and privileged commands has been accessed"
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      hub.jupyter.org/network-access-proxy-api: true
+      hub.jupyter.org/network-access-proxy-http: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 88d7c67c5
+      release: jupyter-hub
+  process:
+    severity: 7
+    matchPaths:
+    - path: /usr/bin/chmod
+    - path: /usr/sbin/useradd
+    - path: /usr/bin/chown
+    - path: /usr/sbin/userdel
+    - path: /usr/bin/kill
+    - path: /usr/sbin/usermod
+    - path: /usr/bin/passwd
+    - path: /usr/bin/chsh
+    action: Audit
+    file:
+    severity: 7
+    matchDirectories:
+    - dir: /etc/skel/
+      recursive: true
+    action: Audit

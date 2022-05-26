@@ -1,0 +1,46 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-block-stig-mongodb-v-235153-limit-access-to-db-files-lahqucl
+  namespace: default
+spec:
+  tags: ["STIG", "MYSQL", "MARIADB"]
+  message: "Alert! Database configuration files access has been denied"
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      hub.jupyter.org/network-access-proxy-api: true
+      hub.jupyter.org/network-access-proxy-http: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 88d7c67c5
+      release: jupyter-hub
+  file:
+    severity: 5
+    matchPaths:
+    - path: /etc/mysql/my.cnf
+      ownerOnly: true
+    - path: /etc/mysql/mariadb.conf.d
+      ownerOnly: true
+    - path: /etc/mysql/conf.d
+      ownerOnly: true
+    - path: /etc/mysql/debian-start
+      ownerOnly: true
+    - path: /etc/mysql/debian.cnf
+      ownerOnly: true
+    - path: /etc/mysql/mariadb.cnf
+      ownerOnly: true
+    - path: /mysqld.pid
+      ownerOnly: true
+    - path: /tmp/mysql.sock
+      ownerOnly: true
+    - path: /usr/lib/systemd/system/mysql.service
+      ownerOnly: true
+    - path: /usr/lib/systemd/system/mysqld.service
+      ownerOnly: true
+    action: Block

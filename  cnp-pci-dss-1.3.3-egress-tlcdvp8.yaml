@@ -1,0 +1,22 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-pci-dss-1.3.3-egress-un5o-nh
+  namespace: default
+spec:
+  description: "This policy will allow outbound connection using kube-dns in port 53"
+  endpointSelector:
+    matchLabels:
+      app: jupyterhub
+      component: continuous-image-puller
+      controller-revision-hash: 56bc99b8f5
+      pod-template-generation: 1
+      release: jupyter-hub
+  egress:
+    - toEntities:
+        - cluster
+    - toEndpoints:
+        - matchLabels:
+  namespace: default
+

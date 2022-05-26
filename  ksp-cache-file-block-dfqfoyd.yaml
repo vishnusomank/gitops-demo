@@ -1,0 +1,25 @@
+---
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-cache-file-block-ocq8f67
+  namespace: default
+spec:
+  message: Permission denied for cache file
+  tags : ["exposure","files"]
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      hub.jupyter.org/network-access-proxy-api: true
+      hub.jupyter.org/network-access-proxy-http: true
+      hub.jupyter.org/network-access-singleuser: true
+      pod-template-hash: 88d7c67c5
+      release: jupyter-hub
+  file:
+    matchPatterns:
+     - pattern: /**/ehcache.xml
+     - pattern: /**/cfcache.map
+       ownerOnly: true
+    severity: 6 # high severity
+  action: Block

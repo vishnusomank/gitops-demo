@@ -1,0 +1,26 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-audit-elasticsearch-network-access-4mzt0hw
+  namespace: default
+spec:
+  tags: ["ELK", "Elastic Search", "Network Access"]
+  message: "Alert! Network access on Elastic pods"
+  selector:
+    matchLabels:
+      app: elasticsearch-master
+      chart: elasticsearch
+      controller-revision-hash: elasticsearch-master-78777c797c
+      release: elasticsearch
+      statefulset.kubernetes.io/pod-name: elasticsearch-master-2
+  network:
+    severity: 5
+    matchProtocols:
+    - protocol: tcp
+    - protocol: udp
+  action: Audit
