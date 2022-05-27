@@ -1,0 +1,17 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-allow-only-kibana-elastic-connections-wzgk4u7
+  namespace: kube-system
+spec:
+  description: "Allow kibana to only connect to elastic search"
+  endpointSelector:
+    matchLabels:
+      k8s-app: cilium
+      pod-template-generation: 1
+      controller-revision-hash: 7b445dc7b4
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        app: elasticsearch

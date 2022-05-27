@@ -1,0 +1,20 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-mitre-t1571-mysql-ingress-834m2gg
+  namespace: kube-system
+spec:
+  description: "Allow ingress communication only through standard ports of MySQL pods"
+  endpointSelector:
+    matchLabels:
+      k8s-app: cilium
+      pod-template-generation: 1
+      controller-revision-hash: 7b445dc7b4
+  ingress:
+  - toPorts:
+    - ports:
+      - port: "3306"
+        protocol: TCP
+      - port: "33060"
+        protocol: TCP

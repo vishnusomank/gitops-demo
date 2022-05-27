@@ -1,0 +1,35 @@
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata: 
+  name: ksp-teamtnt-tntbotinger-ddos-block-xkpiu4l
+  namespace: kube-system
+spec: 
+  message: "Incident! TeamTNT DDoS attempt is blocked"
+  tags : ["Botnet", "TeamTNT", "RC Bot TNTBotinger", "MALWARE"]
+  selector: 
+    matchLabels:
+      controller-revision-hash: 56fd47777c
+      k8s-app: gcp-compute-persistent-disk-csi-driver
+      pod-template-generation: 1
+  process:
+    severity: 1
+    matchPaths:
+      - path: /dev/shm/sbin
+      - path: /usr/bin/tshd
+      - path: /usr/bin/kube
+      - path: /usr/bin/bioset
+      - path: /usr/bin/apt
+      - path: /usr/bin/apt-get
+      - path: /usr/bin/tar
+      - path: /bin/tar
+    action: Block
+  file: 
+    severity: 2
+    matchPaths: 
+      - path: /dev/shm/.alsp
+    action: Audit

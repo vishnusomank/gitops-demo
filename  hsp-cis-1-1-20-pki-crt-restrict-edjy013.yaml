@@ -1,0 +1,6 @@
+---
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorHostPolicy
+metadata:
+  name: hsp-cis-1-1-20-pki-crt-restrict-5vid4gd
+

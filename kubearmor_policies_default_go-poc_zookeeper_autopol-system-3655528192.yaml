@@ -1,0 +1,44 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-system-3655528192
+  namespace: go-poc
+spec:
+  action: Allow
+  file:
+    matchDirectories:
+    - dir: /sys/
+      fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+    matchPaths:
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      path: /conf/zoo.cfg
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      path: /data/myid
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      path: /data/version-2
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      path: /datalog/version-2
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      path: /etc/hosts
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      path: /etc/timezone
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      path: /usr/local/openjdk-11/lib/tzdb.dat
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /usr/local/openjdk-11/bin/java
+      protocol: tcp
+  selector:
+    matchLabels:
+      io.kompose.service: zookeeper
+  severity: 1
+---

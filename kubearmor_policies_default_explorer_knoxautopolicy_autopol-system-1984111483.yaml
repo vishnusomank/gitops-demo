@@ -1,0 +1,98 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-system-1984111483
+  namespace: explorer
+spec:
+  action: Allow
+  file:
+    matchDirectories:
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/bash
+      - path: /usr/bin/ls
+      - path: /usr/bin/tar
+    - dir: /sys/
+      fromSource:
+      - path: /usr/local/bin/grpcurl
+    matchPaths:
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /convert_net_policy.sh
+    - fromSource:
+      - path: /convert_net_policy.sh
+      - path: /convert_sys_policy.sh
+      - path: /usr/bin/rm
+      path: /dev/null
+    - fromSource:
+      - path: /usr/bin/tar
+      path: /etc/group
+    - fromSource:
+      - path: /knoxAutoPolicy
+      path: /etc/hosts
+    - fromSource:
+      - path: /usr/bin/bash
+      - path: /usr/bin/getopt
+      - path: /usr/bin/rm
+      path: /etc/ld.so.cache
+    - fromSource:
+      - path: /usr/bin/tar
+      - path: /usr/local/bin/grpcurl
+      path: /etc/nsswitch.conf
+    - fromSource:
+      - path: /usr/bin/bash
+      - path: /usr/bin/tar
+      path: /etc/passwd
+    - fromSource:
+      - path: /usr/local/bin/grpcurl
+      path: /etc/resolv.conf
+    - fromSource:
+      - path: /usr/bin/tar
+      path: /lib/x86_64-linux-gnu/libacl.so.1
+    - fromSource:
+      - path: /usr/bin/bash
+      - path: /usr/bin/getopt
+      - path: /usr/bin/ls
+      - path: /usr/bin/rm
+      - path: /usr/bin/tar
+      path: /lib/x86_64-linux-gnu/libc.so.6
+    - fromSource:
+      - path: /usr/bin/ls
+      path: /lib/x86_64-linux-gnu/libpcre2-8.so.0
+    - fromSource:
+      - path: /usr/bin/tar
+      path: /lib/x86_64-linux-gnu/libselinux.so.1
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /lib/x86_64-linux-gnu/libtinfo.so.6
+    - fromSource:
+      - path: /knoxAutoPolicy
+      path: /var/run/secrets/kubernetes.io/serviceaccount/token
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /knoxAutoPolicy
+      - path: /usr/bin/bash
+      - path: /usr/bin/tar
+      protocol: tcp
+    - fromSource:
+      - path: /knoxAutoPolicy
+      - path: /usr/local/bin/grpcurl
+      protocol: udp
+  process:
+    matchPaths:
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /convert_net_policy.sh
+    - path: /usr/bin/bash
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /usr/bin/rm
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /usr/local/bin/grpcurl
+  selector:
+    matchLabels:
+      container: knoxautopolicy
+  severity: 1
+---

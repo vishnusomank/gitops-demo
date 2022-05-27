@@ -1,0 +1,17 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-system-1561991198
+  namespace: go-poc
+spec:
+  action: Allow
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /go/bin/digota
+      protocol: tcp
+  selector:
+    matchLabels:
+      io.kompose.service: digota
+  severity: 1
+---

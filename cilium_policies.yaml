@@ -1,29 +1,47 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: autopol-egress-atxvkoirscwmtsz
+  name: autopol-egress-cpenkxvpznyryab
   namespace: explorer
 spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s-app: kube-dns
+        k8s:io.kubernetes.pod.namespace: kube-system
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
   endpointSelector:
     matchLabels:
       container: knoxautopolicy
-  egress:
-  - toPorts:
-    - ports:
-      - port: "443"
-        protocol: TCP
-    toCIDR:
-    - 34.69.108.92/32
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: autopol-egress-bmfbzbaqsorfjuc
+  name: autopol-egress-dgndidkkyvquomt
   namespace: explorer
 spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s-app: kube-dns
+        k8s:io.kubernetes.pod.namespace: kube-system
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
   endpointSelector:
     matchLabels:
       container: knoxautopolicy
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-egress-gtwuxmsljcxplap
+  namespace: explorer
+spec:
   egress:
   - toEndpoints:
     - matchLabels:
@@ -33,16 +51,33 @@ spec:
     - ports:
       - port: "4245"
         protocol: TCP
+  endpointSelector:
+    matchLabels:
+      container: knoxautopolicy
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: autopol-egress-eotihnvcrdxvuim
+  name: autopol-egress-lqxvmpdlldijnxm
   namespace: explorer
 spec:
+  egress:
+  - toCIDR:
+    - 35.184.149.222/32
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
   endpointSelector:
     matchLabels:
       container: knoxautopolicy
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-egress-odijibjnzremklp
+  namespace: explorer
+spec:
   egress:
   - toEndpoints:
     - matchLabels:
@@ -52,398 +87,16 @@ spec:
     - ports:
       - port: "32767"
         protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-urjfbamlsugldif
-  namespace: explorer
-spec:
   endpointSelector:
     matchLabels:
       container: knoxautopolicy
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s-app: kube-dns
-        k8s:io.kubernetes.pod.namespace: kube-system
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: autopol-egress-wqadhhgdraavkze
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: front-end
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s-app: kube-dns
-        k8s:io.kubernetes.pod.namespace: kube-system
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-mjolvbtbtsnaicp
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: catalogue
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s-app: kube-dns
-        k8s:io.kubernetes.pod.namespace: kube-system
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-oqtnmfbvyxtipqc
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: catalogue
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: catalogue-db
-    toPorts:
-    - ports:
-      - port: "3306"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-ingress-xgjceefwgcsetnq
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: catalogue-db
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: catalogue
-    toPorts:
-    - ports:
-      - port: "3306"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-bnodatjzwdohwol
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: user
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s-app: kube-dns
-        k8s:io.kubernetes.pod.namespace: kube-system
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-grbetbubmrlrbkq
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: user
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: user-db
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-ingress-dogsklezphqfzzc
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: user-db
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: user
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-oupferqlhlngaqn
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: queue-master
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s-app: kube-dns
-        k8s:io.kubernetes.pod.namespace: kube-system
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-wpcslocpxhcgbbr
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: queue-master
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: rabbitmq
-    toPorts:
-    - ports:
-      - port: "5672"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-ingress-olewxosplsbraml
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: rabbitmq
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: queue-master
-    toPorts:
-    - ports:
-      - port: "5672"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-eppvdjnwmmywuch
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: carts
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: carts-db
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-rtjbnnerkwskuor
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: carts
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s-app: kube-dns
-        k8s:io.kubernetes.pod.namespace: kube-system
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-ingress-cpqnekyijlodeoy
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: carts-db
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: carts
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-vupqrbgdekbdykc
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: orders
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s-app: kube-dns
-        k8s:io.kubernetes.pod.namespace: kube-system
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-xnhxzwgglvulvqy
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: orders
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: orders-db
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-ingress-cmbcgibrdebqfgg
-  namespace: sock-shop
-spec:
-  endpointSelector:
-    matchLabels:
-      name: orders-db
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: sock-shop
-        name: orders
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-ingress-vdomtjrqhpzqpkf
-  namespace: default
-spec:
-  endpointSelector:
-    matchLabels:
-      io.kompose.service: pgadmin
-  ingress:
-  - toPorts:
-    - ports:
-      - port: "80"
-        protocol: TCP
-    fromEntities:
-    - world
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-tilymecvvcqzbjj
+  name: autopol-egress-vtwkekxjcgnnuaj
   namespace: explorer
 spec:
-  endpointSelector:
-    matchLabels:
-      container: knoxautopolicy
-  egress:
-  - toEndpoints:
-    - matchLabels:
-        app.kubernetes.io/component: primary
-        app.kubernetes.io/instance: mysql
-        app.kubernetes.io/name: mysql
-        k8s:io.kubernetes.pod.namespace: explorer
-    toPorts:
-    - ports:
-      - port: "3306"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-ingress-igsrqphmhcvvspj
-  namespace: explorer
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/component: primary
-      app.kubernetes.io/instance: mysql
-      app.kubernetes.io/name: mysql
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        container: knoxautopolicy
-        k8s:io.kubernetes.pod.namespace: explorer
-    toPorts:
-    - ports:
-      - port: "3306"
-        protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: autopol-egress-ekwlhdgtkefmkmc
-  namespace: explorer
-spec:
-  endpointSelector:
-    matchLabels:
-      container: knoxautopolicy
   egress:
   - toEndpoints:
     - matchLabels:
@@ -457,11 +110,14 @@ spec:
     - ports:
       - port: "3306"
         protocol: TCP
+  endpointSelector:
+    matchLabels:
+      container: knoxautopolicy
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: autopol-ingress-moxgzkujugnqnay
+  name: autopol-ingress-xdtcwqyvrcatbzb
   namespace: explorer
 spec:
   endpointSelector:
@@ -479,5 +135,191 @@ spec:
     toPorts:
     - ports:
       - port: "3306"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-egress-eaipkuxuiraokjh
+  namespace: go-poc
+spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        io.kompose.service: mongodb
+        k8s:io.kubernetes.pod.namespace: go-poc
+    toPorts:
+    - ports:
+      - port: "27017"
+        protocol: TCP
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: digota
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-egress-pseltdnyuwiwogp
+  namespace: go-poc
+spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s-app: kube-dns
+        k8s:io.kubernetes.pod.namespace: kube-system
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: digota
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-egress-tamjdbcslqcgrmb
+  namespace: go-poc
+spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        io.kompose.service: zookeeper
+        k8s:io.kubernetes.pod.namespace: go-poc
+    toPorts:
+    - ports:
+      - port: "2181"
+        protocol: TCP
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: digota
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-egress-yghamufptrcvgsy
+  namespace: go-poc
+spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s-app: kube-dns
+        k8s:io.kubernetes.pod.namespace: kube-system
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: digota
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-ingress-eqjpvsgskzltaaf
+  namespace: go-poc
+spec:
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: zookeeper
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        io.kompose.service: digota
+        k8s:io.kubernetes.pod.namespace: go-poc
+    toPorts:
+    - ports:
+      - port: "2181"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-ingress-utcokvjxfqotxfo
+  namespace: go-poc
+spec:
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: mongodb
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        io.kompose.service: digota
+        k8s:io.kubernetes.pod.namespace: go-poc
+    toPorts:
+    - ports:
+      - port: "27017"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-ingress-cdpqebltrnianra
+  namespace: default
+spec:
+  endpointSelector:
+    matchLabels:
+      app: vaadin-dspublisher
+  ingress:
+  - fromEntities:
+    - world
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-ingress-mgaxbtlvkvlqvho
+  namespace: default
+spec:
+  endpointSelector:
+    matchLabels:
+      app: jboss-switchyard
+  ingress:
+  - fromEntities:
+    - remote-node
+    - world
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-ingress-mmirgelcvazjwwu
+  namespace: default
+spec:
+  endpointSelector:
+    matchLabels:
+      app: jboss-workbench
+  ingress:
+  - fromEntities:
+    - remote-node
+    - world
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-ingress-zhgouobbnnazerz
+  namespace: go-poc
+spec:
+  endpointSelector:
+    matchLabels:
+      io.kompose.service: digota
+  ingress:
+  - fromEntities:
+    - remote-node
+    - world
+    toPorts:
+    - ports:
+      - port: "80"
         protocol: TCP
 ---

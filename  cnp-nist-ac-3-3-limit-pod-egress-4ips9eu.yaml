@@ -1,0 +1,16 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-nist-ac-3-3-limit-pod-egress-xzy-lnq
+  namespace: kube-system
+spec:
+  description: "After applying the policy, This pod can only access other pods within the Namespace"
+  endpointSelector:
+    matchLabels:
+      controller-revision-hash: 7b445dc7b4
+      k8s-app: cilium
+      pod-template-generation: 1
+  egress:
+    - toEndpoints:
+        - {}

@@ -1,0 +1,35 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: autopol-system-2437224484
+  namespace: go-poc
+spec:
+  action: Allow
+  file:
+    matchDirectories:
+    - dir: /data/db/
+      fromSource:
+      - path: /usr/bin/mongod
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/mongod
+    matchPaths:
+    - fromSource:
+      - path: /usr/bin/mongod
+      path: /dev/urandom
+    - fromSource:
+      - path: /usr/bin/mongod
+      path: /etc/hosts
+    - fromSource:
+      - path: /usr/bin/mongod
+      path: /etc/localtime
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /usr/bin/mongod
+      protocol: tcp
+  selector:
+    matchLabels:
+      io.kompose.service: mongodb
+  severity: 1
+---

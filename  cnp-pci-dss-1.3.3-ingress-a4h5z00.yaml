@@ -1,0 +1,18 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-pci-dss-1.3.3-ingress-or14jrd
+  namespace: kube-system
+spec:
+  description: "This policy will allow the inbound connection"
+  endpointSelector:
+    matchLabels:
+      controller-revision-hash: 5848cb99f
+      k8s-app: cilium-gke-node-init
+      pod-template-generation: 1
+  ingress:
+    - fromEntities:
+        - cluster
+    - fromCIDRSet:
+        - cidr: 10.10.10.1/16  #change with your id address

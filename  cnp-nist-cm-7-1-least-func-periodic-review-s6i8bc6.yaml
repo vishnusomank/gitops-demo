@@ -1,0 +1,14 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: "cnp-nist-cm-7-1-least-func-periodic-review"-3ixd8t6
+  namespace: kube-system
+spec:
+  description: "Prohibit or restrict the use of the default ports open in containers."
+  endpointSelector:
+    matchLabels:
+      k8s-app: cilium
+      pod-template-generation: 1
+      controller-revision-hash: 7b445dc7b4
+

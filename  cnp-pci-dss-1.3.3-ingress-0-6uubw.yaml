@@ -8,9 +8,9 @@ spec:
   description: "This policy will allow the inbound connection"
   endpointSelector:
     matchLabels:
-      controller-revision-hash: 56fd47777c
-      k8s-app: gcp-compute-persistent-disk-csi-driver
+      k8s-app: cilium
       pod-template-generation: 1
+      controller-revision-hash: 7b445dc7b4
   ingress:
     - fromEntities:
         - cluster

@@ -3,16 +3,14 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: cnp-stig-postgresql-port-external-access-gfj5gu6
-  namespace: default
+  namespace: kube-system
 spec:
   description: "This will Block PostgreSQL External Access"
   endpointSelector:
     matchLabels:
-      component: continuous-image-puller
-      controller-revision-hash: 56bc99b8f5
+      k8s-app: cilium
       pod-template-generation: 1
-      release: jupyter-hub
-      app: jupyterhub
+      controller-revision-hash: 7b445dc7b4
   ingress:
     - fromEntities:
         - cluster
