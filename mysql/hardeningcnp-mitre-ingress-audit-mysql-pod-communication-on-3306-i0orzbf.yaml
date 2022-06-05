@@ -1,0 +1,22 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-mitre-ingress-audit-mysql-pod-communication-on-3306-i0orzbf
+  namespace: explorer
+spec:
+  description: "To allow communication to mysql pods from specific pods on port 3306"
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-fbf7c789
+      helm.sh/chart: mysql-9.1.2
+      statefulset.kubernetes.io/pod-name: mysql-0
+      app.kubernetes.io/instance: mysql
+  ingress: 
+  - fromEndpoints:
+    - matchLabels:
+        app: frontend   #change app: frontend to match your label
+    toPorts:
+    -  ports:
+       -  port: '3306'
+          protocol: ANY

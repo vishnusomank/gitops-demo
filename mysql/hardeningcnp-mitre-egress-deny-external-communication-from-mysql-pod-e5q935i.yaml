@@ -1,0 +1,18 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-mitre-egress-deny-external-communication-from-mysql-pod-e5q935i
+  namespace: explorer
+spec:
+  description: "To block all external world communication from mysql pod and limit it to specific pods"
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-fbf7c789
+      helm.sh/chart: mysql-9.1.2
+      statefulset.kubernetes.io/pod-name: mysql-0
+      app.kubernetes.io/instance: mysql
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        app: frontend   #change app: frontend to match your label
