@@ -1,0 +1,34 @@
+---
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-pci-dss-10.2.3-access-to-all-audit-log-paths-s8vr24y
+  namespace: explorer
+spec:
+  tags: ["PCI-DSS", "MySQL"]
+  message: "Alert! someone tried to modify log files "
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mysql
+			controller-revision-hash: mysql-fbf7c789
+			helm.sh/chart: mysql-9.1.2
+			statefulset.kubernetes.io/pod-name: mysql-0
+			app.kubernetes.io/instance: mysql
+  file:
+    severity: 4
+    matchDirectories:
+      - dir: /var/log/
+        recursive: true
+        readOnly: false
+        fromSource:
+        - path: /bin/cat
+        - path: /bin/rm
+        - path: /bin/rmdir  
+        - path: /bin/ls
+        - path: /bin/cp
+        - path: /bin/mv
+        - path: /bin/nano
+        - path: /usr/bin/touch
+        - path: /usr/bin/vi
+        - path: /bin/echo
+    action: Block

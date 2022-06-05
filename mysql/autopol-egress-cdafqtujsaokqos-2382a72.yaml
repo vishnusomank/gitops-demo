@@ -1,0 +1,16 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: autopol-egress-cdafqtujsaokqos-25xt6lj
+  namespace: explorer
+spec:
+  egress:
+  - toEndpoints:
+    matchLabels:
+      app.kubernetes.io/name: mysql
+			controller-revision-hash: mysql-fbf7c789
+			helm.sh/chart: mysql-9.1.2
+			statefulset.kubernetes.io/pod-name: mysql-0
+			app.kubernetes.io/instance: mysql
+
