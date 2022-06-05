@@ -1,0 +1,57 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-3518796078
+  namespace: explorer
+spec:
+  action: Audit
+  file:
+    matchDirectories:
+    - dir: /lib/x86_64-linux-gnu/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+    - dir: /proc/
+      fromSource:
+      - path: /bin/bash
+    matchPaths:
+    - fromSource:
+      - path: /bin/bash
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /etc/ld.so.cache
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /etc/passwd
+    - fromSource:
+      - path: /bin/bash
+      path: /lib/x86_64-linux-gnu/libtinfo.so.6
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /opt/bitnami/mysql/conf/my.cnf
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /opt/bitnami/mysql/share/charsets/Index.xml
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /usr/lib/ssl/openssl.cnf
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /usr/lib/x86_64-linux-gnu/libssl.so.1.1
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /bin/bash
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      protocol: tcp
+  process:
+    matchPaths:
+    - path: /bin/bash
+    - path: /opt/bitnami/mysql/bin/mysqladmin
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: mysql
+      helm.sh/chart: mysql-9.1.2
+  severity: 1
+---
