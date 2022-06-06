@@ -1,0 +1,19 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-autopol-egress-wlafyziyfkknfsz
+  namespace: default
+spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        app: elasticsearch
+        k8s:io.kubernetes.pod.namespace: default
+    toPorts:
+    - ports:
+      - port: "9200"
+        protocol: TCP
+  endpointSelector:
+    matchLabels:
+      app: fluentd
+      pod-template-generation: "1"

@@ -1,0 +1,22 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-autopol-egress-zuscbpxsxikufyc
+  namespace: explorer
+spec:
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: mysql
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: mysql
+        helm.sh/chart: mysql-9.1.4
+        k8s:io.kubernetes.pod.namespace: explorer
+    toPorts:
+    - ports:
+      - port: "3306"
+        protocol: TCP
+  endpointSelector:
+    matchLabels:
+      container: knoxautopolicy

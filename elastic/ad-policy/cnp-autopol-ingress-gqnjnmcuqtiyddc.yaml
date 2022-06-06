@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-autopol-ingress-gqnjnmcuqtiyddc
+  namespace: default
+spec:
+  endpointSelector:
+    matchLabels:
+      app: elasticsearch
+  ingress:
+  - fromEntities:
+    - remote-node
+    - world
+    toPorts:
+    - ports:
+      - port: "9200"
+        protocol: TCP

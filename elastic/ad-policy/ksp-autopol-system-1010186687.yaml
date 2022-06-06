@@ -1,0 +1,65 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-1010186687
+  namespace: default
+spec:
+  action: Audit
+  file:
+    matchDirectories:
+    - dir: /etc/profile.d/
+      fromSource:
+      - path: /usr/bin/bash
+    - dir: /sys/
+      fromSource:
+      - path: /usr/share/elasticsearch/jdk/bin/java
+    matchPaths:
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /dev/tty
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /etc/bashrc
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /etc/ld.so.cache
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /etc/passwd
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /lib64/libc.so.6
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /lib64/libdl.so.2
+    - fromSource:
+      - path: /usr/bin/ls
+      path: /lib64/libpcre.so.1
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /lib64/libtinfo.so.5
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /root/.bashrc
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /usr/libexec/grepconf.sh
+    - fromSource:
+      - path: /usr/share/elasticsearch/jdk/bin/java
+      path: /usr/share/elasticsearch/config
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /usr/bin/bash
+      protocol: tcp
+  process:
+    matchPaths:
+    - path: /usr/bin/bash
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /usr/bin/ls
+  selector:
+    matchLabels:
+      app: elasticsearch
+  severity: 1
+---

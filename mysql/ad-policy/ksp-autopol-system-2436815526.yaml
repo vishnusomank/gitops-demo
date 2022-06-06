@@ -1,0 +1,49 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-2436815526
+  namespace: default
+spec:
+  action: Audit
+  file:
+    matchDirectories:
+    - dir: /lib/x86_64-linux-gnu/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+    - dir: /proc/
+      fromSource:
+      - path: /bin/bash
+    matchPaths:
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+      path: /bitnami/mysql/data/ib_buffer_pool.incomplete
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /etc/passwd
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /opt/bitnami/mysql/conf/my.cnf
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /opt/bitnami/mysql/share/charsets/Index.xml
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /usr/lib/ssl/openssl.cnf
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /bin/bash
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      protocol: tcp
+  process:
+    matchPaths:
+    - path: /opt/bitnami/mysql/bin/mysqladmin
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: my-release
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: mysql
+      helm.sh/chart: mysql-9.1.4
+  severity: 1
+---
