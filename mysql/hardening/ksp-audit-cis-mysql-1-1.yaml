@@ -1,0 +1,35 @@
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-audit-cis-mysql-1-1
+  namespace: explorer
+spec:
+  tags: ["MySQL", "CIS"]
+  message: "Notification! nologin process accessed!"
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-79b68f887f
+      helm.sh/chart: mysql-9.1.4
+      statefulset.kubernetes.io/pod-name: mysql-0
+  process:
+    severity: 1
+    matchPaths:
+    - path: /bin/false
+    - path: /sbin/nologin
+    action : Audit
+
+Audit
+  process:
+    severity: 1
+    matchPaths:
+    - path: /etc/apparmor.d/usr.sbin.mysqld
+    matchPatterns:
+    - pattern: mysqld
+    action : Audit
+

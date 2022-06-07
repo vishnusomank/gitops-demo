@@ -1,0 +1,31 @@
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-pci-dss-8-database-log-cannot-be-modified
+  namespace: explorer
+spec:
+  tags: ["PCI-DSS", "MySQL"] 
+  message: "Database log cannot be modified or removed"
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-79b68f887f
+      helm.sh/chart: mysql-9.1.4
+      statefulset.kubernetes.io/pod-name: mysql-0
+  file:
+    severity: 7
+    matchPaths:
+    - path: /var/log/mysql.log
+      fromSource:
+      - path: /usr/bin/rm
+      - path: /usr/bin/touch
+      - path: /usr/bin/cat
+      - path: /usr/bin/nano
+      - path: /usr/bin/vi
+    action : Audit
+
