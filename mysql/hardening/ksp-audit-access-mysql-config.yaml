@@ -1,0 +1,31 @@
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit: 
+# https://www.accuknox.com/kubearmor/ 
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-audit-access-mysql-config
+  namespace: explorer
+spec:
+  tags: ["MITRE", "MySQL"]
+  message: "Access blocked to /etc/mysql/"
+  selector:
+    matchLabels:
+      statefulset.kubernetes.io/pod-name: mysql-0
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-69445b5fcd
+      helm.sh/chart: mysql-9.1.5
+  file:
+    severity: 5
+    matchDirectories:
+    - dir: /etc/mysql/  # <--- mysql directory
+      recursive: true
+    action : Audit
+  process:
+    severity: 5
+    matchPaths:
+      - path: /bin/cd
+    action : Audit
+
