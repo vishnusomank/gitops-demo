@@ -1,0 +1,28 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-1117809181
+  namespace: explorer
+spec:
+  action : Audit
+  file:
+    matchPaths:
+    - fromSource:
+      - path: /bin/bash
+      - path: /opt/bitnami/mysql/bin/mysqladmin
+      path: /etc/ld.so.cache
+  process:
+    matchPaths:
+    - path: /bin/bash
+    - path: /opt/bitnami/mysql/bin/mysqladmin
+    - path: /knoxAutoPolicy
+    - path: /knoxAutoPolicy
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: mysql
+      helm.sh/chart: mysql-9.1.7
+  severity: 1
+---
