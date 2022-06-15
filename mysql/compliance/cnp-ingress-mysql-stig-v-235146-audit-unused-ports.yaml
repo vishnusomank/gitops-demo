@@ -7,11 +7,11 @@ spec:
   description: "To block all unused ports on MySQL pod"
   endpointSelector:
     matchLabels:
-      controller-revision-hash: mysql-67948bf696
       helm.sh/chart: mysql-9.1.7
       statefulset.kubernetes.io/pod-name: mysql-0
       app.kubernetes.io/instance: mysql
       app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-67948bf696
   ingress:
     - fromEndpoints:
       - matchLabels:

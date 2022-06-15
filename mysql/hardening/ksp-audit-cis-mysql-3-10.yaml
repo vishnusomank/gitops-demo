@@ -12,11 +12,11 @@ spec:
   message: "Notification! mysql key-ring has been accessed! keyrings may have been modified."
   selector:
     matchLabels:
-      controller-revision-hash: mysql-67948bf696
       helm.sh/chart: mysql-9.1.7
       statefulset.kubernetes.io/pod-name: mysql-0
       app.kubernetes.io/instance: mysql
       app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-67948bf696
   file:
     severity: 1
     matchPaths:
