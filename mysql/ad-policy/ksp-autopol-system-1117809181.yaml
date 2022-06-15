@@ -1,0 +1,74 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-1117809181
+  namespace: explorer
+spec:
+  action : Audit
+  file:
+    matchDirectories:
+    - dir: /lib/x86_64-linux-gnu/
+      fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      - path: /usr/bin/find
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/find
+    matchPaths:
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+      path: /bitnami/mysql/data/ib_logfile1
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+      path: /bitnami/mysql/data/ib_logfile101
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+      path: /bitnami/mysql/data/ibdata1
+    - fromSource:
+      - path: /opt/bitnami/scripts/mysql/setup.sh
+      path: /dev/null
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      path: /etc/ld.so.cache
+    - fromSource:
+      - path: /bin/sleep
+      path: /lib/x86_64-linux-gnu/libc-2.31.so
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      path: /opt/bitnami/mysql/conf/my.cnf
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      path: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
+    - fromSource:
+      - path: /usr/bin/find
+      path: /usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.10.1
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      path: /usr/lib/x86_64-linux-gnu/libssl.so.1.1
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysql
+      path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /opt/bitnami/mysql/bin/mysqld
+      protocol: tcp
+  process:
+    matchPaths:
+    - fromSource:
+      - path: /bin/bash
+      path: /bin/sleep
+    - path: /knoxAutoPolicy
+    - path: /opt/bitnami/mysql/bin/mysqld
+    - path: /opt/bitnami/scripts/mysql/setup.sh
+    - path: /opt/bitnami/mysql/bin/mysql
+    - path: /usr/bin/find
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: mysql
+      helm.sh/chart: mysql-9.1.7
+  severity: 1
+---
