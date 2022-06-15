@@ -1,0 +1,23 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cnp-ingress-mysql-stig-v-235146-audit-unused-ports
+  namespace: explorer
+spec:
+  description: "To block all unused ports on MySQL pod"
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: mysql
+      app.kubernetes.io/name: mysql
+      controller-revision-hash: mysql-67948bf696
+      helm.sh/chart: mysql-9.1.7
+      statefulset.kubernetes.io/pod-name: mysql-0
+  ingress:
+    - fromEndpoints:
+      - matchLabels:
+          role: frontend # Change your match labels
+      toPorts:
+        - ports:
+            - port: "3306"
+        - ports:
+            - port: "33060"
