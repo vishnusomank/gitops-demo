@@ -75,9 +75,6 @@ spec:
     - fromSource:
       - path: /bin/bash
       path: /bin/sleep
-    - path: /knoxAutoPolicy
-    - path: /usr/bin/tar
-    - path: /usr/bin/bash
     - path: /opt/bitnami/mysql/bin/mysqld
     - path: /opt/bitnami/scripts/mysql/setup.sh
     - path: /opt/bitnami/mysql/bin/mysql
@@ -89,6 +86,10 @@ spec:
       app.kubernetes.io/instance: mysql
       app.kubernetes.io/managed-by: Helm
       app.kubernetes.io/name: mysql
+      helm.sh/chart: mysql-9.1.7
+  severity: 1
+---
+p.kubernetes.io/name: mysql
       helm.sh/chart: mysql-9.1.7
   severity: 1
 ---

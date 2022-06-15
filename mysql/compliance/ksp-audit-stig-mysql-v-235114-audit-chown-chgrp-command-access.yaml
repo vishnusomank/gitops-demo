@@ -13,11 +13,11 @@ spec:
   message: "Alert! Unautherized (non-root) attempt to change the user and/or group ownership of a given file, directory, or symbolic link. is detected and blocked"
   selector:
     matchLabels:
+      controller-revision-hash: mysql-67948bf696
       helm.sh/chart: mysql-9.1.7
       statefulset.kubernetes.io/pod-name: mysql-0
       app.kubernetes.io/instance: mysql
       app.kubernetes.io/name: mysql
-      controller-revision-hash: mysql-67948bf696
   process:
     severity: 3
     matchPatterns:
