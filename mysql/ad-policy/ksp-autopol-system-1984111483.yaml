@@ -1,0 +1,63 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-1984111483
+  namespace: explorer
+spec:
+  action : Audit
+  file:
+    matchDirectories:
+    - dir: /
+      fromSource:
+      - path: /knoxAutoPolicy
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/ls
+      - path: /usr/bin/tar
+    matchPaths:
+    - fromSource:
+      - path: /knoxAutoPolicy
+      path: /accuknox.db-journal
+    - fromSource:
+      - path: /knoxAutoPolicy
+      path: /accuknox.db
+    - fromSource:
+      - path: /usr/bin/tar
+      path: /etc/group
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /etc/ld.so.cache
+    - fromSource:
+      - path: /usr/bin/ls
+      - path: /usr/bin/tar
+      path: /etc/passwd
+    - fromSource:
+      - path: /usr/bin/ls
+      path: /usr/lib/x86_64-linux-gnu/libc.so.6
+    - fromSource:
+      - path: /usr/bin/ls
+      path: /usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.10.4
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /knoxAutoPolicy
+      protocol: tcp
+  process:
+    matchPaths:
+    - path: /usr/bin/ls
+    - path: /opt/bitnami/mysql/bin/mysqld
+    - path: /opt/bitnami/scripts/mysql/setup.sh
+    - path: /opt/bitnami/mysql/bin/mysql
+    - path: /opt/bitnami/mysql/bin/mysqladmin
+    - path: /usr/bin/find
+    - path: /knoxAutoPolicy
+    - path: /usr/bin/tar
+    - path: /usr/bin/bash
+  selector:
+    matchLabels:
+      container: knoxautopolicy
+  severity: 1
+---
