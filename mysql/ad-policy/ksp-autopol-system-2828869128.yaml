@@ -1,0 +1,61 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-2828869128
+  namespace: default
+spec:
+  action: Block
+  file:
+    matchDirectories:
+    - dir: /proc/
+      fromSource:
+      - path: /usr/bin/curl
+      recursive: true
+    matchPaths:
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /etc/hosts
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /etc/ssl/openssl.cnf
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /lib/libcrypto.so.1.0.0
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /lib/libssl.so.1.0.0
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /lib/libz.so.1.2.8
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /usr/lib/engines/libpadlock.so
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /usr/lib/libcurl.so.4.4.0
+    - fromSource:
+      - path: /usr/bin/curl
+      path: /usr/lib/libssh2.so.1.0.1
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /usr/bin/curl
+      protocol: tcp
+    - fromSource:
+      - path: /usr/bin/curl
+      protocol: udp
+  process:
+    matchPaths:
+    - path: /usr/bin/curl
+    - path: /knoxAutoPolicy
+    - path: /usr/bin/tar
+    - path: /convert_sys_policy.sh
+    - path: /bin/bash
+    - path: /opt/bitnami/scripts/mysql/run.sh
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tiefighter
+      class: tiefighter
+      org: empire
+  severity: 1
+---
