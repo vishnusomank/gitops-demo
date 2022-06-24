@@ -1,0 +1,57 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-autopol-system-3972354287
+  namespace: default
+spec:
+  action: Block
+  file:
+    matchPaths:
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /dev/tty
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /etc/bash.bashrc
+    - fromSource:
+      - path: /usr/bin/groups
+      path: /etc/group
+    - fromSource:
+      - path: /usr/bin/bash
+      - path: /usr/bin/groups
+      path: /etc/ld.so.cache
+    - fromSource:
+      - path: /usr/bin/groups
+      path: /etc/nsswitch.conf
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /lib/terminfo/x/xterm
+    - fromSource:
+      - path: /usr/bin/bash
+      - path: /usr/bin/dircolors
+      - path: /usr/bin/groups
+      path: /lib/x86_64-linux-gnu/libc.so.6
+  network:
+    matchProtocols:
+    - fromSource:
+      - path: /usr/bin/groups
+      protocol: tcp
+  process:
+    matchPaths:
+    - path: /usr/bin/bash
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /usr/bin/dircolors
+    - fromSource:
+      - path: /usr/bin/bash
+      path: /usr/bin/groups
+    - path: /knoxAutoPolicy
+    - path: /usr/bin/tar
+    - path: /convert_sys_policy.sh
+    - path: /bin/bash
+    - path: /opt/bitnami/scripts/mysql/run.sh
+  selector:
+    matchLabels:
+      app: mysql
+  severity: 1
+---
