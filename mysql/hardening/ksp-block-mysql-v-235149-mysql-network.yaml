@@ -1,0 +1,21 @@
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: ksp-block-mysql-v-235149-mysql-network
+  namespace: default
+spec:
+  tags: ["MySQL", "STIG", "V-235149"]
+  message: "MySQL was accessed from network"
+  selector:
+    matchLabels:
+      app: mysql
+  network:
+    matchProtocols:
+    - protocol: TCP
+    severity: 6
+    action: Block
+
